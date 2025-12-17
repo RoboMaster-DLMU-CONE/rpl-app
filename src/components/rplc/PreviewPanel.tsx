@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CodeHighlight } from "@/components/ui/code-highlight";
 import { RplcConfig } from "@/lib/schema";
 
 interface PreviewPanelProps {
@@ -8,6 +9,27 @@ interface PreviewPanelProps {
 }
 
 export function PreviewPanel({ config }: PreviewPanelProps) {
+  // Generate sample C++ code based on the configuration
+  const generateCppCode = (): string => {
+    return `#ifndef ${config.packet_name.toUpperCase()}_H
+#define ${config.packet_name.toUpperCase()}_H
+
+#include <stdint.h>
+
+struct ${config.packet_name} {
+  // Generated from configuration
+  uint32_t timestamp_ms{0};
+
+  // Add fields based on your configuration schema
+  // This is a simplified example - extend based on actual needs
+};
+
+#endif // ${config.packet_name.toUpperCase()}_H`;
+  };
+
+  const jsonContent = JSON.stringify(config, null, 2);
+  const cppContent = generateCppCode();
+
   return (
     <div className="h-full flex flex-col gap-4">
       <Card className="flex-1 flex flex-col overflow-hidden py-0 gap-0">
@@ -20,22 +42,16 @@ export function PreviewPanel({ config }: PreviewPanelProps) {
                 <TabsTrigger value="cpp" className="text-xs h-7">C++ 头文件</TabsTrigger>
               </TabsList>
             </div>
-            
+
             <TabsContent value="json" className="flex-1 p-0 m-0 relative">
               <ScrollArea className="h-full">
-                <pre className="p-4 text-xs font-mono">
-                  {JSON.stringify(config, null, 2)}
-                </pre>
+                <CodeHighlight code={jsonContent} lang="json" />
               </ScrollArea>
             </TabsContent>
-            
+
             <TabsContent value="cpp" className="flex-1 p-0 m-0 relative">
               <ScrollArea className="h-full">
-                <div className="p-4 text-xs font-mono text-muted-foreground">
-                  // C++ 生成功能稍后将通过 WASM 实现。
-                  <br />
-                  // 当前配置: {config.packet_name}
-                </div>
+                <CodeHighlight code={cppContent} lang="cpp" />
               </ScrollArea>
             </TabsContent>
           </Tabs>

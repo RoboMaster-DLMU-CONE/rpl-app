@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Moon, Sun, Download, Upload, Laptop } from "lucide-react";
-import { useTheme } from "@/components/theme-provider";
+import { Button } from '@/components/ui/button';
+import { Moon, Sun, Download, Upload, Laptop } from 'lucide-react';
+import { useTheme } from '@/components/theme-provider';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 export function Header() {
   const { setTheme } = useTheme();
@@ -16,14 +16,11 @@ export function Header() {
       <div className="w-full max-w-[1800px] mx-auto flex h-14 items-center px-4 md:px-6 lg:px-8">
         <div className="mr-4 flex">
           <a className="mr-6 flex items-center space-x-2" href="/">
-            <span className="font-bold text-lg tracking-tight">
-              RPLC 配置器
-            </span>
+            <span className="font-bold text-lg tracking-tight">RPL 配置器</span>
           </a>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
-          </div>
+          <div className="w-full flex-1 md:w-auto md:flex-none"></div>
           <nav className="flex items-center space-x-2">
             <Button variant="outline" size="sm" className="h-8 hidden sm:flex">
               <Upload className="mr-2 h-4 w-4" />
@@ -33,7 +30,7 @@ export function Header() {
               <Download className="mr-2 h-4 w-4" />
               下载 JSON
             </Button>
-            
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -43,15 +40,15 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
+                <DropdownMenuItem onClick={() => setTheme('light')}>
                   <Sun className="mr-2 h-4 w-4" />
                   浅色
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <DropdownMenuItem onClick={() => setTheme('dark')}>
                   <Moon className="mr-2 h-4 w-4" />
                   深色
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
+                <DropdownMenuItem onClick={() => setTheme('system')}>
                   <Laptop className="mr-2 h-4 w-4" />
                   系统
                 </DropdownMenuItem>

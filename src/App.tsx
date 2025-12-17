@@ -16,7 +16,7 @@ const App = () => {
           <div className="h-full overflow-y-auto pr-2 lg:col-span-5 xl:col-span-4">
             <ConfigForm onConfigChange={setConfig} />
           </div>
-          <div className="h-full lg:sticky lg:top-8 hidden lg:block lg:col-span-7 xl:col-span-8">
+          <div className="h-full lg:sticky lg:top-8 lg:col-span-7 xl:col-span-8 lg:order-last">
             <PreviewPanel config={config} />
           </div>
         </main>
