@@ -69,7 +69,10 @@ export function CodeHighlight({ code, lang }: CodeHighlightProps) {
     // Set up a MutationObserver to watch for theme class changes
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
+        ) {
           updateTheme();
         }
       }

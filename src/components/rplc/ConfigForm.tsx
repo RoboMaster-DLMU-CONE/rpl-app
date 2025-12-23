@@ -1,6 +1,9 @@
-import { useForm, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { configSchema, defaultValues, RplcConfig, cppTypes } from "@/lib/schema";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Plus, Trash2 } from 'lucide-react';
+import { useEffect } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -9,14 +12,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trash2, Plus } from "lucide-react";
-import { useEffect } from "react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import {
+  configSchema,
+  cppTypes,
+  defaultValues,
+  type RplcConfig,
+} from '@/lib/schema';
 
 interface ConfigFormProps {
   onConfigChange: (config: RplcConfig) => void;
@@ -26,12 +37,12 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
   const form = useForm<RplcConfig>({
     resolver: zodResolver(configSchema),
     defaultValues,
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "fields",
+    name: 'fields',
   });
 
   // Watch all fields to update preview
@@ -90,7 +101,7 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
                   <FormControl>
                     <Input
                       placeholder="Robot::Sensors"
-                      value={field.value || ""}
+                      value={field.value || ''}
                       onChange={(e) => field.onChange(e.target.value || null)}
                     />
                   </FormControl>
@@ -107,7 +118,7 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
                   <FormControl>
                     <Input
                       placeholder="留空自动生成，如: RPL_SENSORDATA_HPP"
-                      value={field.value || ""}
+                      value={field.value || ''}
                       onChange={(e) => field.onChange(e.target.value || null)}
                     />
                   </FormControl>
@@ -158,7 +169,9 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => append({ name: "new_field", type: "uint8_t", comment: "" })}
+              onClick={() =>
+                append({ name: 'new_field', type: 'uint8_t', comment: '' })
+              }
             >
               <Plus className="mr-2 h-4 w-4" />
               添加字段
@@ -166,7 +179,10 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
           </CardHeader>
           <CardContent className="space-y-4">
             {fields.map((field, index) => (
-              <div key={field.id} className="flex items-start gap-3 p-3 border rounded-md bg-muted/20">
+              <div
+                key={field.id}
+                className="flex items-start gap-3 p-3 border rounded-md bg-muted/20"
+              >
                 <div className="grid gap-3 flex-1 sm:grid-cols-3">
                   <FormField
                     control={form.control}
@@ -187,7 +203,10 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-xs">类型</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger className="h-8 w-full min-w-[120px]">
                               <SelectValue placeholder="选择类型" />
@@ -212,7 +231,11 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
                       <FormItem>
                         <FormLabel className="text-xs">注释</FormLabel>
                         <FormControl>
-                          <Input {...field} className="h-8" placeholder="描述" />
+                          <Input
+                            {...field}
+                            className="h-8"
+                            placeholder="描述"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

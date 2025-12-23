@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Moon, Sun, Download, Upload, Laptop } from 'lucide-react';
+import { Download, Laptop, Moon, Sun, Upload } from 'lucide-react';
 import { useTheme } from '@/components/theme-provider';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,9 @@ export function Header() {
       <div className="w-full max-w-[1800px] mx-auto flex h-14 items-center px-4 md:px-6 lg:px-8">
         <div className="mr-4 flex">
           <a className="mr-6 flex items-center space-x-2" href="/">
-            <span className="font-bold text-lg tracking-tight">RoboMaster Packet Library Compiler UI</span>
+            <span className="font-bold text-lg tracking-tight">
+              RoboMaster Packet Library Compiler UI
+            </span>
           </a>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
