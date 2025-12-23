@@ -10,12 +10,16 @@ type ThemeProviderProps = {
 
 type ThemeProviderState = {
   theme: Theme;
+  actualTheme: 'dark' | 'light';
   setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
 };
 
 const initialState: ThemeProviderState = {
   theme: 'system',
+  actualTheme: 'light',
   setTheme: () => null,
+  toggleTheme: () => null,
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
@@ -29,6 +33,8 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
 
+  const [actualTheme, setActualTheme] = useState<'dark' | 'light'>('light');
+
   useEffect(() => {
     const root = window.document.documentElement;
 
@@ -41,18 +47,38 @@ export function ThemeProvider({
         : 'light';
 
       root.classList.add(systemTheme);
+      setActualTheme(systemTheme);
       return;
     }
 
     root.classList.add(theme);
+    setActualTheme(theme);
   }, [theme]);
+
+  const handleSetTheme = (newTheme: Theme) => {
+    const updateTheme = () => {
+      localStorage.setItem(storageKey, newTheme);
+      setTheme(newTheme);
+    };
+
+    // Use View Transitions API if available
+    if ('startViewTransition' in document) {
+      (document as any).startViewTransition(updateTheme);
+    } else {
+      updateTheme();
+    }
+  };
+
+  const toggleTheme = () => {
+    const newTheme = actualTheme === 'light' ? 'dark' : 'light';
+    handleSetTheme(newTheme);
+  };
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
+    actualTheme,
+    setTheme: handleSetTheme,
+    toggleTheme,
   };
 
   return (
