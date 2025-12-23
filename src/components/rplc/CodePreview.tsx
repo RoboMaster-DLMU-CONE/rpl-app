@@ -32,31 +32,38 @@ export function CodePreview({
   };
 
   return (
-    <Card className="flex-1 flex flex-col">
-      <CardHeader>
+    <Card className="flex-1 flex flex-col border-border/50 shadow-sm transition-shadow hover:shadow-md">
+      <CardHeader className="pb-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <CardTitle>C++ 代码预览</CardTitle>
+            <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+              <div className="h-1 w-1 rounded-full bg-primary" />
+              C++ 代码预览
+            </CardTitle>
             {isLoading && (
               <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
             )}
           </div>
           {code && !hasErrors && (
-            <Button size="sm" onClick={handleDownload}>
+            <Button
+              size="sm"
+              onClick={handleDownload}
+              className="transition-all hover:shadow-sm"
+            >
               <Download className="h-4 w-4 mr-2" />
               下载
             </Button>
           )}
         </div>
       </CardHeader>
-      <CardContent className="flex-1 overflow-hidden">
+      <CardContent className="flex-1 overflow-hidden pt-0">
         <ScrollArea className="h-full">
           {code && !hasErrors ? (
-            <div className="border rounded-md overflow-hidden">
+            <div className="rounded-md border border-border/60 overflow-hidden bg-muted/30 shadow-inner">
               <CodeHighlight code={code} lang="cpp" />
             </div>
           ) : (
-            <div className="flex items-center justify-center h-32 text-sm text-muted-foreground border border-dashed rounded-md">
+            <div className="flex items-center justify-center h-32 text-sm text-muted-foreground border border-dashed border-border/50 rounded-md bg-muted/20 transition-colors">
               {hasErrors
                 ? '请修复错误后查看代码'
                 : isLoading

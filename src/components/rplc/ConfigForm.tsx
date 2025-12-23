@@ -59,9 +59,12 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
     <Form {...form}>
       <form className="space-y-6">
         {/* Basic Info */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">基本信息</CardTitle>
+        <Card className="border-border/50 shadow-sm transition-shadow hover:shadow-md">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+              <div className="h-1 w-1 rounded-full bg-primary" />
+              基本信息
+            </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">
@@ -133,9 +136,12 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
         </Card>
 
         {/* Advanced Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">高级设置</CardTitle>
+        <Card className="border-border/50 shadow-sm transition-shadow hover:shadow-md">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+              <div className="h-1 w-1 rounded-full bg-primary" />
+              高级设置
+            </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
             <FormField
@@ -162,9 +168,12 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
         </Card>
 
         {/* Fields */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-base">字段定义</CardTitle>
+        <Card className="border-border/50 shadow-sm transition-shadow hover:shadow-md">
+          <CardHeader className="flex flex-row items-center justify-between pb-4">
+            <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+              <div className="h-1 w-1 rounded-full bg-primary" />
+              字段定义
+            </CardTitle>
             <Button
               type="button"
               variant="outline"

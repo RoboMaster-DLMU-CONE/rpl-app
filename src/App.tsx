@@ -39,10 +39,22 @@ const App = () => {
     <ThemeProvider defaultTheme="system" storageKey="rplc-ui-theme">
       <div className="min-h-screen bg-background font-sans antialiased flex flex-col">
         <Header />
-        <main className="flex-1 w-full max-w-[1800px] mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-6 py-6">
+        <main className="flex-1 w-full max-w-[1800px] mx-auto px-4 md:px-6 lg:px-8 relative">
+          {/* Subtle grid background for tech feel */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.015] dark:opacity-[0.03]">
+            <div
+              className="w-full h-full"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+                backgroundSize: '32px 32px',
+              }}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-6 py-6 relative z-10">
             {/* 左侧：配置表单 */}
-            <div className="w-full">
+            <div className="w-full space-y-6">
               <ConfigForm onConfigChange={setConfig} />
             </div>
 

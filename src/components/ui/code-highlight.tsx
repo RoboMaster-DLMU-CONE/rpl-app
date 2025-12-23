@@ -98,7 +98,7 @@ export function CodeHighlight({ code, lang }: CodeHighlightProps) {
         <div className="p-4 text-xs font-mono text-red-500">{error}</div>
       ) : (
         <div
-          className="p-4 text-xs font-mono"
+          className="p-4 text-xs font-mono [&_pre]:!bg-transparent [&_pre]:!m-0 [&_pre]:!p-0"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       )}

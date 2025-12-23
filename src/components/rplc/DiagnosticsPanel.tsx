@@ -25,16 +25,19 @@ export function DiagnosticsPanel({
   const warnings = diagnostics.filter((d) => d.severity === 'Warning');
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="border-border/50 shadow-sm transition-shadow hover:shadow-md">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle>诊断信息</CardTitle>
+          <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+            <div className="h-1 w-1 rounded-full bg-primary" />
+            诊断信息
+          </CardTitle>
           {isLoading && (
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
           )}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-0">
         <ScrollArea className="max-h-48">
           {!wasmInitialized ? (
             <div className="flex items-center gap-2 text-muted-foreground py-2">
