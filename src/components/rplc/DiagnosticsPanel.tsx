@@ -8,6 +8,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { JsDiagnostic } from '@/lib/schema';
 
 interface DiagnosticsPanelProps {
@@ -39,10 +40,17 @@ export function DiagnosticsPanel({
       </CardHeader>
       <CardContent className="pt-0">
         <ScrollArea className="max-h-48">
-          {!wasmInitialized ? (
-            <div className="flex items-center gap-2 text-muted-foreground py-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm">正在初始化 WASM 模块...</span>
+          {!wasmInitialized || isLoading ? (
+            <div className="space-y-3 py-2">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-12" />
+                <Skeleton className="h-4 w-8" />
+              </div>
+              <div className="space-y-2 pl-5">
+                <Skeleton className="h-3 w-5/6" />
+                <Skeleton className="h-3 w-4/5" />
+                <Skeleton className="h-3 w-full" />
+              </div>
             </div>
           ) : diagnostics.length === 0 ? (
             <div className="text-sm text-muted-foreground py-2">

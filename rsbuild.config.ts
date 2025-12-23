@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [pluginReact()],
   html: {
     title: 'RPLC UI',
+    favicon: './public/favicon.svg',
   },
   resolve: {
     alias: {

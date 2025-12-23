@@ -84,6 +84,7 @@ export function PreviewPanel({
         code={generatedCode}
         hasErrors={hasErrors}
         isLoading={isGenerating}
+        wasmInitialized={wasmInitialized}
         packetName={config.packet_name}
       />
     </div>

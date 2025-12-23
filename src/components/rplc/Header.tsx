@@ -10,12 +10,13 @@ export function Header() {
       <div className="w-full max-w-[1800px] mx-auto flex h-14 items-center px-4 md:px-6 lg:px-8">
         <div className="mr-4 flex">
           <a className="mr-6 flex items-center space-x-2 group" href="/">
-            <span className="font-bold text-lg tracking-tight">
+            <img src="/favicon.svg" alt="Logo" className="h-8 w-8" />
+            <span className="font-bold text-2xl tracking-tight pt-1">
               RPLC{' '}
               <AuroraText
-                className="font-bold text-lg tracking-tight"
+                className="font-bold text-2xl tracking-tight"
                 colors={['#FF0080', '#7928CA', '#0070F3', '#38bdf8']}
-                speed={1}
+                speed={4}
               >
                 UI
               </AuroraText>
