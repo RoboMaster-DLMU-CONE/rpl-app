@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { AnimatedFormLabel } from './AnimatedFormLabel';
 import { useTheme } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +29,7 @@ import {
   defaultValues,
   type RplcConfig,
 } from '@/lib/schema';
+import { AnimatedFormLabel } from './AnimatedFormLabel';
 
 interface ConfigFormProps {
   onConfigChange: (config: RplcConfig) => void;
@@ -54,7 +54,9 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
   useEffect(() => {
     const updateTheme = () => {
       if (theme === 'system') {
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const systemDark = window.matchMedia(
+          '(prefers-color-scheme: dark)',
+        ).matches;
         setIsDark(systemDark);
       } else {
         setIsDark(theme === 'dark');
@@ -137,7 +139,9 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
                   name="command_id"
                   render={({ field }) => (
                     <FormItem>
-                      <AnimatedFormLabel>命令 ID (Command ID)</AnimatedFormLabel>
+                      <AnimatedFormLabel>
+                        命令 ID (Command ID)
+                      </AnimatedFormLabel>
                       <FormControl>
                         <Input placeholder="0x0104" {...field} />
                       </FormControl>

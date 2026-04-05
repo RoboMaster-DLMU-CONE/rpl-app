@@ -5,11 +5,7 @@ import { useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-type AnimationVariant =
-  | 'circle'
-  | 'circle-blur'
-  | 'gif'
-  | 'polygon';
+type AnimationVariant = 'circle' | 'circle-blur' | 'gif' | 'polygon';
 
 type StartPosition =
   | 'center'
@@ -37,7 +33,6 @@ export const ThemeToggleButton = ({
   className,
   onClick,
 }: ThemeToggleButtonProps) => {
-
   const handleClick = useCallback(() => {
     // Inject animation styles for this specific transition
     const styleId = `theme-transition-${Date.now()}`;
@@ -55,8 +50,10 @@ export const ThemeToggleButton = ({
     };
 
     if (variant === 'circle') {
-      const cx = start === 'center' ? '50' : start.includes('left') ? '0' : '100';
-      const cy = start === 'center' ? '50' : start.includes('top') ? '0' : '100';
+      const cx =
+        start === 'center' ? '50' : start.includes('left') ? '0' : '100';
+      const cy =
+        start === 'center' ? '50' : start.includes('top') ? '0' : '100';
       css = `
         @supports (view-transition-name: root) {
           ::view-transition-old(root) {
@@ -77,8 +74,10 @@ export const ThemeToggleButton = ({
         }
       `;
     } else if (variant === 'circle-blur') {
-      const cx = start === 'center' ? '50' : start.includes('left') ? '0' : '100';
-      const cy = start === 'center' ? '50' : start.includes('top') ? '0' : '100';
+      const cx =
+        start === 'center' ? '50' : start.includes('left') ? '0' : '100';
+      const cy =
+        start === 'center' ? '50' : start.includes('top') ? '0' : '100';
       css = `
         @supports (view-transition-name: root) {
           ::view-transition-old(root) {
@@ -189,7 +188,7 @@ export const ThemeToggleButton = ({
       className={cn(
         'relative overflow-hidden transition-all h-8 w-8',
         showLabel && 'gap-2',
-        className
+        className,
       )}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
     >
@@ -199,9 +198,7 @@ export const ThemeToggleButton = ({
         <Moon className="h-[1.2rem] w-[1.2rem]" />
       )}
       {showLabel && (
-        <span className="text-sm">
-          {theme === 'light' ? 'Light' : 'Dark'}
-        </span>
+        <span className="text-sm">{theme === 'light' ? 'Light' : 'Dark'}</span>
       )}
     </Button>
   );

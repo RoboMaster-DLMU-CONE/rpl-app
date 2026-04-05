@@ -1,5 +1,5 @@
-import { TextAnimate } from '@/components/ui/text-animate';
 import { FormLabel } from '@/components/ui/form';
+import { TextAnimate } from '@/components/ui/text-animate';
 
 interface AnimatedFormLabelProps {
   children: string;

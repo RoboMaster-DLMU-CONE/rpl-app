@@ -1,5 +1,5 @@
-import { AuroraText } from '@/components/ui/aurora-text';
 import { useTheme } from '@/components/theme-provider';
+import { AuroraText } from '@/components/ui/aurora-text';
 import { ThemeToggleButton } from '@/components/ui/theme-toggle-button';
 
 export function Header() {

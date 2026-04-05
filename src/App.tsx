@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-
-import { BackgroundBeams } from '@/components/ui/background-beams';
 import { ConfigForm } from '@/components/rplc/ConfigForm';
 import { Header } from '@/components/rplc/Header';
 import { PreviewPanel } from '@/components/rplc/PreviewPanel';
 import { ThemeProvider } from '@/components/theme-provider';
+import { BackgroundBeams } from '@/components/ui/background-beams';
 import { defaultValues, type RplcConfig } from '@/lib/schema';
 
 const App = () => {
