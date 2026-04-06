@@ -17,7 +17,7 @@
         "@radix-ui/react-switch": "^1.2.6",
         "@radix-ui/react-tabs": "^1.1.13",
         "@radix-ui/react-tooltip": "^1.2.8",
-        "@robomaster-cone/rplc-wasm": "^0.1.2",
+        "@robomaster-cone/rplc-wasm": "^0.5.0",
         "@shikijs/transformers": "^4.0.2",
         "@tailwindcss/postcss": "^4.2.2",
         "class-variance-authority": "^0.7.1",
@@ -232,7 +232,7 @@
 
     "@radix-ui/rect": ["@radix-ui/rect@1.1.1", "", {}, "sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw=="],
 
-    "@robomaster-cone/rplc-wasm": ["@robomaster-cone/rplc-wasm@0.1.2", "", {}, "sha512-nzRgWtp9kDf259cUpAKMXuZUKQNeaii1a7M3Ve/8aM5XCTax55o23y0y5XCp9N4HsYJG5QbT8jpuBSXtGwBJWA=="],
+    "@robomaster-cone/rplc-wasm": ["@robomaster-cone/rplc-wasm@0.5.0", "", {}, "sha512-vhuMqdgmCLeRXBIIw1OgsxJzazlgKJSz6ComCbA7IY7twokGr+SDLIAXuvAHuYOCvU3xFRaMGaPj16GU/kp9Ig=="],
 
     "@rsbuild/core": ["@rsbuild/core@1.7.5", "", { "dependencies": { "@rspack/core": "~1.7.10", "@rspack/lite-tapable": "~1.1.0", "@swc/helpers": "^0.5.20", "core-js": "~3.47.0", "jiti": "^2.6.1" }, "bin": { "rsbuild": "bin/rsbuild.js" } }, "sha512-i37urpoV4y9NSsGiUOuLdoI42KJ5h4gAZ8EG8Ilmsond3bxoAoOCu7YvC+1pJ7p+r16suVPW8cki891ZKHOoXQ=="],
 
