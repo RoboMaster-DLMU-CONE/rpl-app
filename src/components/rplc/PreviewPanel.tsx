@@ -29,7 +29,38 @@ export function PreviewPanel({
 
         setIsGenerating(true);
         try {
-          const jsonString = JSON.stringify(cfg);
+          // Transform the config to match rplc-wasm schema requirements
+          const transformedConfig = {
+            ...cfg,
+            fields: cfg.fields.map((field) => {
+              const transformedField: {
+                name: string;
+                type: string;
+                comment?: string;
+                bit_field?: number;
+              } = {
+                name: field.name,
+                type: field.type,
+              };
+
+              if (field.comment) {
+                transformedField.comment = field.comment;
+              }
+
+              if (field.isArray && field.arrayLength) {
+                transformedField.type = `${field.type}[${field.arrayLength}]`;
+              } else if (field.isBitfield && field.bitfieldLength) {
+                const bitLen = parseInt(field.bitfieldLength, 10);
+                if (!Number.isNaN(bitLen)) {
+                  transformedField.bit_field = bitLen;
+                }
+              }
+
+              return transformedField;
+            }),
+          };
+
+          const jsonString = JSON.stringify(transformedConfig);
 
           // 调用 WASM 验证
           const diags = wasmFunctions.check_json(jsonString);

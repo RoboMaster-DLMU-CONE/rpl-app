@@ -256,7 +256,15 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
                 variant="outline"
                 size="sm"
                 onClick={() =>
-                  append({ name: 'new_field', type: 'uint8_t', comment: '' })
+                  append({
+                    name: 'new_field',
+                    type: 'uint8_t',
+                    comment: '',
+                    isArray: false,
+                    arrayLength: null,
+                    isBitfield: false,
+                    bitfieldLength: null,
+                  })
                 }
               >
                 <Plus className="mr-2 h-4 w-4" />
@@ -267,82 +275,185 @@ export function ConfigForm({ onConfigChange }: ConfigFormProps) {
               {fields.map((field, index) => (
                 <div
                   key={field.id}
-                  className="flex items-start gap-3 p-3 border rounded-md bg-muted/20"
+                  className="flex flex-col gap-3 p-3 border rounded-md bg-muted/20 relative"
                 >
-                  <div className="grid gap-3 flex-1 sm:grid-cols-3">
-                    <FormField
-                      control={form.control}
-                      name={`fields.${index}.name`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <AnimatedFormLabel className="text-xs">
-                            名称
-                          </AnimatedFormLabel>
-                          <FormControl>
-                            <Input {...field} className="h-8" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`fields.${index}.type`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <AnimatedFormLabel className="text-xs">
-                            类型
-                          </AnimatedFormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
+                  <div className="flex items-start gap-3">
+                    <div className="grid gap-3 flex-1 sm:grid-cols-3">
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.name`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <AnimatedFormLabel className="text-xs">
+                              名称
+                            </AnimatedFormLabel>
                             <FormControl>
-                              <SelectTrigger className="h-8 w-full min-w-[120px]">
-                                <SelectValue placeholder="选择类型" />
-                              </SelectTrigger>
+                              <Input {...field} className="h-8" />
                             </FormControl>
-                            <SelectContent>
-                              {cppTypes.map((t) => (
-                                <SelectItem key={t} value={t}>
-                                  {t}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`fields.${index}.comment`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <AnimatedFormLabel className="text-xs">
-                            注释
-                          </AnimatedFormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              className="h-8"
-                              placeholder="描述"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.type`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <AnimatedFormLabel className="text-xs">
+                              类型
+                            </AnimatedFormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="h-8 w-full min-w-[120px]">
+                                  <SelectValue placeholder="选择类型" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {cppTypes.map((t) => (
+                                  <SelectItem key={t} value={t}>
+                                    {t}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.comment`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <AnimatedFormLabel className="text-xs">
+                              注释
+                            </AnimatedFormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                className="h-8"
+                                placeholder="描述"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="mt-6 h-8 w-8 text-destructive hover:text-destructive/90"
+                      onClick={() => remove(index)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="mt-6 h-8 w-8 text-destructive hover:text-destructive/90"
-                    onClick={() => remove(index)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+
+                  {/* Array and Bitfield Options */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 border-t border-border/50">
+                    {/* Array Row */}
+                    <div className="flex items-center gap-4">
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.isArray`}
+                        render={({ field: isArrayField }) => (
+                          <FormItem className="flex items-center space-x-2 space-y-0">
+                            <FormControl>
+                              <Switch
+                                checked={isArrayField.value}
+                                onCheckedChange={(checked) => {
+                                  isArrayField.onChange(checked);
+                                  if (checked) {
+                                    form.setValue(
+                                      `fields.${index}.isBitfield`,
+                                      false,
+                                    );
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <AnimatedFormLabel className="text-xs font-normal">
+                              数组
+                            </AnimatedFormLabel>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.arrayLength`}
+                        render={({ field: lengthField }) => (
+                          <FormItem className="flex-1 space-y-0">
+                            <FormControl>
+                              <Input
+                                {...lengthField}
+                                value={lengthField.value || ''}
+                                placeholder="长度 (如 10)"
+                                className="h-7 text-xs"
+                                disabled={
+                                  !form.watch(`fields.${index}.isArray`)
+                                }
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    {/* Bitfield Row */}
+                    <div className="flex items-center gap-4">
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.isBitfield`}
+                        render={({ field: isBitfieldField }) => (
+                          <FormItem className="flex items-center space-x-2 space-y-0">
+                            <FormControl>
+                              <Switch
+                                checked={isBitfieldField.value}
+                                onCheckedChange={(checked) => {
+                                  isBitfieldField.onChange(checked);
+                                  if (checked) {
+                                    form.setValue(
+                                      `fields.${index}.isArray`,
+                                      false,
+                                    );
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <AnimatedFormLabel className="text-xs font-normal">
+                              位域
+                            </AnimatedFormLabel>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`fields.${index}.bitfieldLength`}
+                        render={({ field: lengthField }) => (
+                          <FormItem className="flex-1 space-y-0">
+                            <FormControl>
+                              <Input
+                                {...lengthField}
+                                value={lengthField.value || ''}
+                                placeholder="长度 (如 1)"
+                                className="h-7 text-xs"
+                                disabled={
+                                  !form.watch(`fields.${index}.isBitfield`)
+                                }
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
                 </div>
               ))}
               {fields.length === 0 && (

@@ -3,14 +3,23 @@ import { z } from 'zod';
 // C++ Identifier Regex
 const cppIdentifierRegex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
-export const fieldSchema = z.object({
-  name: z
-    .string()
-    .min(1, '名称不能为空')
-    .regex(cppIdentifierRegex, '必须是有效的 C++ 标识符'),
-  type: z.string().min(1, '类型不能为空'),
-  comment: z.string().optional(),
-});
+export const fieldSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, '名称不能为空')
+      .regex(cppIdentifierRegex, '必须是有效的 C++ 标识符'),
+    type: z.string().min(1, '类型不能为空'),
+    comment: z.string().optional(),
+    isArray: z.boolean().default(false),
+    arrayLength: z.string().optional().nullable(),
+    isBitfield: z.boolean().default(false),
+    bitfieldLength: z.string().optional().nullable(),
+  })
+  .refine(
+    (data) => !(data.isArray && data.isBitfield),
+    '数组和位域不能同时启用',
+  );
 
 export const configSchema = z.object({
   packet_name: z
@@ -24,7 +33,7 @@ export const configSchema = z.object({
       const num = val.toLowerCase().startsWith('0x')
         ? parseInt(val, 16)
         : parseInt(val, 10);
-      return !isNaN(num) && num >= 0 && num <= 65535;
+      return !Number.isNaN(num) && num >= 0 && num <= 65535;
     }, '必须是有效的 uint16 (0-65535)'),
   namespace: z.string().optional().nullable(),
   packed: z.boolean().default(true),
@@ -46,6 +55,10 @@ export const defaultValues: RplcConfig = {
       name: 'sensor_id',
       type: 'uint8_t',
       comment: 'Sensor ID',
+      isArray: false,
+      arrayLength: null,
+      isBitfield: false,
+      bitfieldLength: null,
     },
   ],
 };
